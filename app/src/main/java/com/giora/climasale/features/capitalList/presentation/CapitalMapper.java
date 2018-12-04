@@ -8,6 +8,7 @@ public class CapitalMapper implements ICapitalMapper {
 		CapitalViewModel capitalViewModel = new CapitalViewModel();
 		capitalViewModel.city = capital.city;
 		capitalViewModel.country = capital.country;
+		capitalViewModel.flagImageUrl = capital.flagImageUrl;
 		return capitalViewModel;
 	}
 }

@@ -11,15 +11,24 @@
 	android:paddingStart="16dp"
 	android:paddingTop="8dp">
 
+	<ImageView
+		android:id="@+id/flag"
+		android:layout_width="66dp"
+		android:layout_height="66dp"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		android:src="@drawable/placeholder_flag"/>
+
 	<TextView
 		android:id="@+id/city"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
+		android:layout_marginStart="8dp"
 		android:ellipsize="end"
 		android:maxLines="1"
 		android:textColor="@android:color/black"
-		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toTopOf="parent"
+		app:layout_constraintStart_toEndOf="@+id/flag"
+		app:layout_constraintTop_toTopOf="@+id/flag"
 		tools:text="Jerusalem" />
 
 	<TextView

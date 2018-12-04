@@ -38,7 +38,7 @@ public class CapitalsRepository implements ICapitalsRepository {
 			public List<Capital> apply(List<CapitalResult> input) {
 				List<Capital> capitals = new ArrayList<>();
 				for (CapitalResult capitalResult : input)
-					capitals.add(new Capital(capitalResult.capital, capitalResult.country));
+					capitals.add(new Capital(capitalResult.capital, capitalResult.country, capitalResult.flag));
 
 				return capitals;
 			}

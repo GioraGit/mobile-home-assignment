@@ -33,8 +33,8 @@ public class CapitalListActivity extends AppCompatActivity {
 	@Inject
 	ICapitalListViewModelFactory capitalListViewModelFactory;
 
-	final CapitalListAdapter capitalListAdapter = new CapitalListAdapter();
-	final CapitalListAdapter filteredCapitalsAdapter = new CapitalListAdapter();
+	final CapitalListAdapter capitalListAdapter = new CapitalListAdapter(this);
+	final CapitalListAdapter filteredCapitalsAdapter = new CapitalListAdapter(this);
 	private CapitalListViewModel capitalListViewModel;
 
 	@Override

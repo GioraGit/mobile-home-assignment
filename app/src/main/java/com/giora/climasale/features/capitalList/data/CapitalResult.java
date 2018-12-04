@@ -9,4 +9,7 @@ class CapitalResult {
 
 	@SerializedName("name")
 	String country;
+
+	@SerializedName("flag")
+	String flag;
 }

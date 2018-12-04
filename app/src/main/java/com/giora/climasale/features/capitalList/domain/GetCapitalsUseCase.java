@@ -18,7 +18,8 @@ public class GetCapitalsUseCase implements IGetCapitalsUseCase {
 	@NonNull
 	@Override
 	public LiveData<List<Capital>> getCapitals() {
-		return capitalsRepository.getCapitals(new CapitalProperty[]{CapitalProperty.City, CapitalProperty.Country});
+		return capitalsRepository.getCapitals(new CapitalProperty[]{CapitalProperty.City,
+				CapitalProperty.Country, CapitalProperty.FlagImageUrl});
 	}
 
 	@NonNull

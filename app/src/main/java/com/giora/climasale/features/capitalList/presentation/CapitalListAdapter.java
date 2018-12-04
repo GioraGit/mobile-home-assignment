@@ -1,5 +1,6 @@
 package com.giora.climasale.features.capitalList.presentation;
 
+import android.app.Activity;
 import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -15,9 +16,11 @@ import java.util.List;
 class CapitalListAdapter extends RecyclerView.Adapter<CapitalViewHolder>{
 
 	final MutableLiveData<Boolean> aViewHolderWasPopulated = new MutableLiveData<>();
+	private final Activity containingActivity;
 	private List<CapitalViewModel> capitalViewModels;
 
-	public CapitalListAdapter() {
+	public CapitalListAdapter(Activity containingActivity) {
+		this.containingActivity = containingActivity;
 		capitalViewModels = new ArrayList<>();
 
 		aViewHolderWasPopulated.setValue(false);
@@ -28,7 +31,7 @@ class CapitalListAdapter extends RecyclerView.Adapter<CapitalViewHolder>{
 	public CapitalViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
 		View itemView = LayoutInflater.from(viewGroup.getContext())
 				.inflate(R.layout.view_holder_capital, viewGroup, false);
-		return new CapitalViewHolder(itemView);
+		return new CapitalViewHolder(itemView, containingActivity);
 	}
 
 	@Override
