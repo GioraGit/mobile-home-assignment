@@ -1,0 +1,4 @@
+<resources>
+	<string name="app_name">ClimaSale</string>
+	<string name="countries_host_name">https://restcountries.eu/rest/v2/</string>
+</resources>
