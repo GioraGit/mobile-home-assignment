@@ -26,7 +26,17 @@ public class CapitalListViewModel extends ViewModel {
 	@NonNull
 	LiveData<List<CapitalViewModel>> getCapitals() {
 		LiveData<List<Capital>> capitals = getCapitalsUseCase.getCapitals();
+		return mapToViewModels(capitals);
+	}
 
+	@NonNull
+	LiveData<List<CapitalViewModel>> filterCapitals(String term) {
+		LiveData<List<Capital>> capitals = getCapitalsUseCase.filterCapitals(term);
+		return mapToViewModels(capitals);
+	}
+
+	@NonNull
+	private LiveData<List<CapitalViewModel>> mapToViewModels(LiveData<List<Capital>> capitals) {
 		return Transformations.map(capitals, new Function<List<Capital>, List<CapitalViewModel>>() {
 			@Override
 			public List<CapitalViewModel> apply(List<Capital> input) {

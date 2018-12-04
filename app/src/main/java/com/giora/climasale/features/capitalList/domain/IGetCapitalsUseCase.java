@@ -9,4 +9,7 @@ public interface IGetCapitalsUseCase {
 
 	@NonNull
 	LiveData<List<Capital>> getCapitals();
+
+	@NonNull
+	LiveData<List<Capital>> filterCapitals(String term);
 }
