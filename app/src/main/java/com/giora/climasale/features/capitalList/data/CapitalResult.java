@@ -12,4 +12,7 @@ class CapitalResult {
 
 	@SerializedName("flag")
 	String flag;
+
+	@SerializedName("latlng")
+	double[] latLng;
 }

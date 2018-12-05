@@ -5,4 +5,5 @@
 	<string name="search_hint">Search…</string>
 	<string name="loading_forecast">Loading forecast…</string>
 	<string name="title_activity_weather_details">Weather Details</string>
+	<string name="title_activity_maps">Map</string>
 </resources>

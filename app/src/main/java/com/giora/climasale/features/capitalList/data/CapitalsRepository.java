@@ -37,13 +37,27 @@ public class CapitalsRepository implements ICapitalsRepository {
 			@Override
 			public List<Capital> apply(List<CapitalResult> input) {
 				List<Capital> capitals = new ArrayList<>();
-				for (CapitalResult capitalResult : input)
-					capitals.add(new Capital(capitalResult.capital, capitalResult.country, capitalResult.flag));
+				for (CapitalResult capitalResult : input) {
+					double[] latLng = getLatLng(capitalResult);
+					capitals.add(new Capital(capitalResult.capital, capitalResult.country,
+							capitalResult.flag, latLng[0], latLng[1]));
+				}
 
 				return capitals;
 			}
 		});
 
 		return capitals;
+	}
+
+	private double[] getLatLng(CapitalResult capitalResult) {
+		double[] latLng = new double[2];
+		latLng[0] = isLatLngValid(capitalResult) ? capitalResult.latLng[0] : 0;
+		latLng[1] = isLatLngValid(capitalResult) ? capitalResult.latLng[1] : 0;
+		return latLng;
+	}
+
+	private boolean isLatLngValid(CapitalResult capitalResult) {
+		return capitalResult.latLng != null && capitalResult.latLng.length == 2;
 	}
 }

@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.giora.climasale.R;
 import com.giora.climasale.features.weatherDetails.presentation.WeatherDetailsActivity;
 import com.github.twocoffeesoneteam.glidetovectoryou.GlideToVectorYou;
+import com.google.gson.Gson;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,6 +29,7 @@ class CapitalViewHolder extends RecyclerView.ViewHolder {
 	ImageView flagImageView;
 
 	private final Activity containingActivity;
+	private CapitalViewModel currentCapitalViewModel;
 
 	CapitalViewHolder(@NonNull View itemView,
 					  Activity containingActivity) {
@@ -39,6 +41,7 @@ class CapitalViewHolder extends RecyclerView.ViewHolder {
 	}
 
 	void setCapital(CapitalViewModel capitalViewModel) {
+		currentCapitalViewModel = capitalViewModel;
 		cityTextView.setText(capitalViewModel.getCity());
 		countryTextView.setText(capitalViewModel.getCountry());
 		loadFlagImage(capitalViewModel.flagImageUrl);
@@ -48,7 +51,11 @@ class CapitalViewHolder extends RecyclerView.ViewHolder {
 		itemView.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				if (currentCapitalViewModel == null)
+					return;
+
 				Intent weatherDetailsIntent = new Intent(containingActivity, WeatherDetailsActivity.class);
+				weatherDetailsIntent.putExtra(WeatherDetailsActivity.CAPITAL_INTENT_EXTRA_KEY, new Gson().toJson(currentCapitalViewModel));
 				containingActivity.startActivity(weatherDetailsIntent);
 			}
 		});

@@ -4,4 +4,5 @@ public enum CapitalProperty {
 	City,
 	Country,
 	FlagImageUrl,
+	LatLng
 }
