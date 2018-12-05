@@ -74,7 +74,7 @@ public class WeatherDetailsActivity extends AppCompatActivity {
 				googleMap = gMap;
 				LatLng location = new LatLng(capitalViewModel.getLat(), capitalViewModel.getLng());
 				googleMap.addMarker(new MarkerOptions().position(location).title(capitalViewModel.getMarkerText()));
-				googleMap.moveCamera(CameraUpdateFactory.newLatLng(location));
+				googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 10));
 			}
 		});
 	}
