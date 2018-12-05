@@ -3,4 +3,6 @@
 	<string name="countries_host_name">https://restcountries.eu/rest/v2/</string>
 	<string name="search_action">search</string>
 	<string name="search_hint">Search…</string>
+	<string name="loading_forecast">Loading forecast…</string>
+	<string name="title_activity_weather_details">Weather Details</string>
 </resources>
