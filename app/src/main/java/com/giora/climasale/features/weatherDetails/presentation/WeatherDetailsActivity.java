@@ -1,8 +1,10 @@
 package com.giora.climasale.features.weatherDetails.presentation;
 
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import com.giora.climasale.R;
 import com.giora.climasale.features.capitalList.presentation.CapitalViewModel;
 import com.giora.climasale.services.ioc.component.ComponentManager;
+import com.giora.climasale.services.location.ILatLngProvider;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -26,6 +29,7 @@ import butterknife.ButterKnife;
 public class WeatherDetailsActivity extends AppCompatActivity {
 
 	public final static String CAPITAL_INTENT_EXTRA_KEY = "capitalIntentExtraKey";
+	private static final int MAP_ZOOM_LEVEL = 10;
 
 	@BindView(R.id.list)
 	RecyclerView forecastList;
@@ -33,7 +37,9 @@ public class WeatherDetailsActivity extends AppCompatActivity {
 	@Inject
 	IWeatherDetailsViewModelFactory weatherDetailsViewModelFactory;
 
-	private GoogleMap googleMap;
+	@Inject
+	ILatLngProvider latLngProvider;
+
 	private WeatherDetailsViewModel weatherDetailsViewModel;
 	private CapitalViewModel capitalViewModel;
 
@@ -70,11 +76,19 @@ public class WeatherDetailsActivity extends AppCompatActivity {
 
 		mapFragment.getMapAsync(new OnMapReadyCallback() {
 			@Override
-			public void onMapReady(GoogleMap gMap) {
-				googleMap = gMap;
-				LatLng location = new LatLng(capitalViewModel.getLat(), capitalViewModel.getLng());
-				googleMap.addMarker(new MarkerOptions().position(location).title(capitalViewModel.getMarkerText()));
-				googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 10));
+			public void onMapReady(GoogleMap googleMap) {
+				final GoogleMap finalGoogleMap = googleMap;
+				latLngProvider.getForAddress(WeatherDetailsActivity.this, capitalViewModel.getMarkerAddress())
+						.observe(WeatherDetailsActivity.this, new Observer<LatLng>() {
+							@Override
+							public void onChanged(@Nullable LatLng latLng) {
+								if (latLng == null)
+									return;
+
+								finalGoogleMap.addMarker(new MarkerOptions().position(latLng).title(capitalViewModel.getMarkerAddress()));
+								finalGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, MAP_ZOOM_LEVEL));
+							}
+						});
 			}
 		});
 	}

@@ -1,29 +1,18 @@
 package com.giora.climasale.features.capitalList.presentation;
 
 public class CapitalViewModel {
+
+	private static final String NO_CAPITAL_CITY_TEXT = "--- No capital city ---";
+
 	String city = "";
 	String country = "";
 	String flagImageUrl = "";
-	double lat;
-	double lng;
 
 	public String getCity() {
-		return city.isEmpty() ? "--- No capital city ---" : city;
+		return city.isEmpty() ? NO_CAPITAL_CITY_TEXT : city;
 	}
 
-	public String getCountry() {
-		return country.isEmpty() ? "--- Standalone capital ---" : country;
-	}
-
-	public double getLat() {
-		return lat;
-	}
-
-	public double getLng() {
-		return lng;
-	}
-
-	public String getMarkerText() {
-		return "Somewhere in " + country;
+	public String getMarkerAddress() {
+		return city.isEmpty() ? country : city;
 	}
 }

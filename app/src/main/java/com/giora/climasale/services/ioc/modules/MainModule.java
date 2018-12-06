@@ -2,6 +2,8 @@ package com.giora.climasale.services.ioc.modules;
 
 import com.giora.climasale.R;
 import com.giora.climasale.app.ClimaSaleApp;
+import com.giora.climasale.services.location.ILatLngProvider;
+import com.giora.climasale.services.location.LatLngProvider;
 import com.giora.climasale.services.restClients.ICountriesRestClient;
 import com.giora.climasale.services.restClients.RestClient;
 
@@ -21,7 +23,12 @@ public class MainModule {
 
 	@Provides
 	@Singleton
-	public ICountriesRestClient provideRestClient() {
+	ICountriesRestClient provideRestClient() {
 		return new RestClient(application.getResources().getString(R.string.countries_host_name));
+	}
+
+	@Provides
+	ILatLngProvider provideLatLngProvider() {
+		return new LatLngProvider();
 	}
 }
