@@ -3,6 +3,7 @@ package com.giora.climasale.features.capitalList.presentation;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -33,9 +34,11 @@ public class CapitalListActivity extends AppCompatActivity {
 	@Inject
 	ICapitalListViewModelFactory capitalListViewModelFactory;
 
+	private static final String CAPITAL_LIST_LAYOUT_MANAGER_SAVED_STATE = "capitalListLayoutManagerSavedState";
 	final CapitalListAdapter capitalListAdapter = new CapitalListAdapter(this);
 	final CapitalListAdapter filteredCapitalsAdapter = new CapitalListAdapter(this);
 	private CapitalListViewModel capitalListViewModel;
+	private Parcelable capitalListLayoutManagerSavedState;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +59,18 @@ public class CapitalListActivity extends AppCompatActivity {
 		return true;
 	}
 
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		saveCapitalListPosition(outState);
+		super.onSaveInstanceState(outState);
+	}
+
+	@Override
+	protected void onRestoreInstanceState(Bundle savedInstanceState) {
+		restoreCapitalListPosition(savedInstanceState);
+		super.onRestoreInstanceState(savedInstanceState);
+	}
+
 	private void loadCapitals() {
 		initRecyclerView(capitalListAdapter);
 
@@ -63,6 +78,7 @@ public class CapitalListActivity extends AppCompatActivity {
 			@Override
 			public void onChanged(@Nullable List<CapitalViewModel> capitalViewModels) {
 				capitalListAdapter.setCapitalViewModels(capitalViewModels);
+				setCapitalListPosition();
 			}
 		});
 
@@ -130,5 +146,26 @@ public class CapitalListActivity extends AppCompatActivity {
 				resetProgressBar();
 			}
 		});
+	}
+
+	private void saveCapitalListPosition(Bundle outState) {
+		RecyclerView.LayoutManager layoutManager = capitalList.getLayoutManager();
+		if (layoutManager != null)
+			outState.putParcelable(CAPITAL_LIST_LAYOUT_MANAGER_SAVED_STATE, layoutManager.onSaveInstanceState());
+	}
+
+	private void restoreCapitalListPosition(Bundle savedInstanceState) {
+		capitalListLayoutManagerSavedState = savedInstanceState.getParcelable(CAPITAL_LIST_LAYOUT_MANAGER_SAVED_STATE);
+	}
+
+	private void setCapitalListPosition() {
+		if (capitalListLayoutManagerSavedState == null)
+			return;
+
+		RecyclerView.LayoutManager layoutManager = capitalList.getLayoutManager();
+		if (layoutManager == null)
+			return;
+
+		layoutManager.onRestoreInstanceState(capitalListLayoutManagerSavedState);
 	}
 }
