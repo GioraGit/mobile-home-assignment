@@ -34,6 +34,12 @@ class ForecastViewHolder extends RecyclerView.ViewHolder {
 	@BindView(R.id.min_temp_value)
 	TextView minTempValueTextView;
 
+	@BindView(R.id.precipitation_label)
+	TextView precipitationLabelTextView;
+
+	@BindView(R.id.precipitation_value)
+	TextView precipitationValueTextView;
+
 	ForecastViewHolder(@NonNull View itemView) {
 		super(itemView);
 
@@ -52,6 +58,7 @@ class ForecastViewHolder extends RecyclerView.ViewHolder {
 		dateTextView.setText(forecastViewModel.getDate());
 		maxTempValueTextView.setText(forecastViewModel.getMaxTemperature());
 		minTempValueTextView.setText(forecastViewModel.getMinTemperature());
+		precipitationValueTextView.setText(forecastViewModel.getPrecipitation());
 		showForecast();
 	}
 
@@ -62,6 +69,8 @@ class ForecastViewHolder extends RecyclerView.ViewHolder {
 		minTempLabelTextView.setVisibility(View.INVISIBLE);
 		maxTempValueTextView.setVisibility(View.INVISIBLE);
 		minTempValueTextView.setVisibility(View.INVISIBLE);
+		precipitationLabelTextView.setVisibility(View.INVISIBLE);
+		precipitationValueTextView.setVisibility(View.INVISIBLE);
 	}
 
 	private void showForecast() {
@@ -71,5 +80,7 @@ class ForecastViewHolder extends RecyclerView.ViewHolder {
 		minTempLabelTextView.setVisibility(View.VISIBLE);
 		maxTempValueTextView.setVisibility(View.VISIBLE);
 		minTempValueTextView.setVisibility(View.VISIBLE);
+		precipitationLabelTextView.setVisibility(View.VISIBLE);
+		precipitationValueTextView.setVisibility(View.VISIBLE);
 	}
 }

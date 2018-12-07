@@ -1,6 +1,8 @@
 package com.giora.climasale.features.weatherDetails.data;
 
 import com.giora.climasale.features.weatherDetails.domain.Forecast;
+import com.giora.climasale.features.weatherDetails.domain.Precipitation;
+import com.giora.climasale.features.weatherDetails.domain.PrecipitationUnits;
 import com.giora.climasale.features.weatherDetails.domain.Temperature;
 import com.giora.climasale.features.weatherDetails.domain.TemperatureUnits;
 
@@ -15,14 +17,14 @@ public class ForecastResultMapper implements IForecastResultMapper {
 			return null;
 
 		return new Forecast(getDate(forecastResult.observationTime), getMinTemperature(forecastResult.temperatures),
-				getMaxTemperature(forecastResult.temperatures), null);
+				getMaxTemperature(forecastResult.temperatures), getPrecipitation(forecastResult.precipitationArray));
 	}
 
 	private Temperature getMaxTemperature(TemperatureResult[] temperatures) {
 		if (temperatures == null || temperatures.length< 2)
 			return null;
 
-		TemperatureInstanceResult maxTemperatureResult = temperatures[1].max;
+		ValueInstanceResult maxTemperatureResult = temperatures[1].max;
 		if (maxTemperatureResult == null)
 			return null;
 
@@ -33,7 +35,7 @@ public class ForecastResultMapper implements IForecastResultMapper {
 		if (temperatures == null || temperatures.length< 2)
 			return null;
 
-		TemperatureInstanceResult minTemperatureResult = temperatures[0].min;
+		ValueInstanceResult minTemperatureResult = temperatures[0].min;
 		if (minTemperatureResult == null)
 			return null;
 
@@ -56,5 +58,27 @@ public class ForecastResultMapper implements IForecastResultMapper {
 			return TemperatureUnits.Celsius;
 
 		return TemperatureUnits.Fahrenheit;
+	}
+
+	private Precipitation getPrecipitation(PrecipitationResult[] precipitationArray) {
+		if (precipitationArray == null || precipitationArray.length == 0)
+			return null;
+
+		PrecipitationResult precipitationResult = precipitationArray[0];
+		if (precipitationResult == null)
+			return null;
+
+		ValueInstanceResult precipitationInstanceResult = precipitationResult.max;
+		if (precipitationInstanceResult == null)
+			return null;
+
+		return new Precipitation(precipitationInstanceResult.value, mapPrecipitationUnits(precipitationInstanceResult.units));
+	}
+
+	private PrecipitationUnits mapPrecipitationUnits(String precipitationUnits) {
+		if (precipitationUnits.equals("mm/hr"))
+			return PrecipitationUnits.MillimetersPerHour;
+
+		return PrecipitationUnits.InchesPerHour;
 	}
 }

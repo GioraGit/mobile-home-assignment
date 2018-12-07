@@ -30,4 +30,8 @@ public class Forecast {
 	public Temperature getMaxTemperature() {
 		return maxTemperature;
 	}
+
+	public Precipitation getPrecipitation() {
+		return precipitation;
+	}
 }

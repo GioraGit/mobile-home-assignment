@@ -12,6 +12,7 @@ class ForecastViewModel {
 	private String date;
 	private String minTemperature;
 	private String maxTemperature;
+	private String precipitation;
 
 	public void setInitialText(String initialText) {
 		this.initialText = initialText;
@@ -51,5 +52,14 @@ class ForecastViewModel {
 
 	public boolean shouldDisplayInitialText() {
 		return shouldDisplayInitialText;
+	}
+
+	public String getPrecipitation() {
+		return precipitation;
+	}
+
+	public void setPrecipitation(String precipitation) {
+		this.precipitation = precipitation;
+		shouldDisplayInitialText = false;
 	}
 }

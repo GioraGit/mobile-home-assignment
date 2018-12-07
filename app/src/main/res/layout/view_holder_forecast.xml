@@ -5,10 +5,6 @@
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
 	android:paddingBottom="8dp"
-	android:paddingEnd="16dp"
-	android:paddingLeft="16dp"
-	android:paddingRight="16dp"
-	android:paddingStart="16dp"
 	android:paddingTop="8dp">
 
 	<ImageView
@@ -95,5 +91,28 @@
 		android:layout_height="wrap_content"
 		android:orientation="vertical"
 		app:layout_constraintGuide_begin="136dp" />
+
+	<TextView
+		android:id="@+id/precipitation_label"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="24dp"
+		android:text="Precipitation:"
+		android:visibility="invisible"
+		app:layout_constraintStart_toEndOf="@id/min_temp_value"
+		app:layout_constraintTop_toTopOf="@id/max_temp_label"
+		tools:visibility="visible" />
+
+	<TextView
+		android:id="@+id/precipitation_value"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="8dp"
+		android:textColor="@android:color/black"
+		android:visibility="invisible"
+		app:layout_constraintStart_toEndOf="@id/precipitation_label"
+		app:layout_constraintTop_toTopOf="@id/precipitation_label"
+		tools:text="0.35 mm/hr"
+		tools:visibility="visible"/>
 
 </android.support.constraint.ConstraintLayout>

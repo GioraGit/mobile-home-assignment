@@ -9,4 +9,7 @@ class ForecastResult {
 
 	@SerializedName("temp")
 	TemperatureResult[] temperatures;
+
+	@SerializedName("precipitation")
+	PrecipitationResult[] precipitationArray;
 }

@@ -2,7 +2,7 @@ package com.giora.climasale.features.weatherDetails.data;
 
 import com.google.gson.annotations.SerializedName;
 
-class TemperatureInstanceResult {
+class ValueInstanceResult {
 
 	@SerializedName("value")
 	double value;

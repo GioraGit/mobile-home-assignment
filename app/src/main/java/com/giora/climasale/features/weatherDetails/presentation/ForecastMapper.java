@@ -1,6 +1,8 @@
 package com.giora.climasale.features.weatherDetails.presentation;
 
 import com.giora.climasale.features.weatherDetails.domain.Forecast;
+import com.giora.climasale.features.weatherDetails.domain.Precipitation;
+import com.giora.climasale.features.weatherDetails.domain.PrecipitationUnits;
 import com.giora.climasale.features.weatherDetails.domain.Temperature;
 import com.giora.climasale.features.weatherDetails.domain.TemperatureUnits;
 
@@ -17,7 +19,31 @@ public class ForecastMapper implements IForecastMapper {
 		mapDate(forecastViewModel, forecast);
 		mapMinTemperature(forecastViewModel, forecast);
 		mapMaxTemperature(forecastViewModel, forecast);
+		mapPrecipitation(forecastViewModel, forecast);
 		return forecastViewModel;
+	}
+
+	private void mapPrecipitation(ForecastViewModel forecastViewModel, Forecast forecast) {
+		Precipitation precipitation = forecast.getPrecipitation();
+		if (precipitation == null)
+			return;
+
+		forecastViewModel.setPrecipitation(getPrecipitationAsString(precipitation));
+	}
+
+	private String getPrecipitationAsString(Precipitation precipitation) {
+		return String.format("%.2f %s", precipitation.getPrecipitation(), mapPrecipitationUnitsToString(precipitation.getPrecipitationUnits()));
+	}
+
+	private String mapPrecipitationUnitsToString(PrecipitationUnits precipitationUnits) {
+		switch (precipitationUnits) {
+			case MillimetersPerHour:
+				return "mm/hr";
+			case InchesPerHour:
+				return "in/hr";
+			default:
+				return "mm/hr";
+		}
 	}
 
 	private void mapMaxTemperature(ForecastViewModel forecastViewModel, Forecast forecast) {
