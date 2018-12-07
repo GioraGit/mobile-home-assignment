@@ -22,7 +22,7 @@ public class WeatherDetailsModule {
 
 	@Provides
 	IGetForecastsUseCase provideGetForecastsUseCase() {
-		return new GetForecastsUseCase();
+		return new GetForecastsUseCase(forecastsRepository);
 	}
 
 	@Singleton

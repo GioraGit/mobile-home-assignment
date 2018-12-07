@@ -7,9 +7,9 @@ import com.google.android.gms.maps.model.LatLng;
 
 import java.util.List;
 
-public interface IGetForecastsUseCase {
-	int getNumberOfDays();
+public interface IForecastsRepository {
 
 	@NonNull
-	LiveData<List<Forecast>> getForecasts(LatLng latLng, UnitSystem unitSystem);
+	LiveData<List<Forecast>> getForecasts(LatLng latLng, int numberOfDays, UnitSystem unitSystem,
+										  ForecastProperty[] forecastProperties);
 }

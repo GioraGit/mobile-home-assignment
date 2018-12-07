@@ -20,7 +20,7 @@ public class WeatherDetailsViewModelFactory implements IWeatherDetailsViewModelF
 	@Override
 	public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
 		if (modelClass == WeatherDetailsViewModel.class)
-			return modelClass.cast(new WeatherDetailsViewModel(getForecastsUseCase, dayOfTheWeekImageProvider));
+			return modelClass.cast(new WeatherDetailsViewModel(getForecastsUseCase, dayOfTheWeekImageProvider, forecastMapper));
 		else
 			throw new IllegalArgumentException("ViewModel not found");
 	}
