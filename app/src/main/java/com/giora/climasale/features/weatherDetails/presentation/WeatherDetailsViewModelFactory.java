@@ -9,11 +9,14 @@ public class WeatherDetailsViewModelFactory implements IWeatherDetailsViewModelF
 
 	private final IGetForecastsUseCase getForecastsUseCase;
 	private final IDayOfTheWeekImageProvider dayOfTheWeekImageProvider;
+	private final IForecastMapper forecastMapper;
 
 	public WeatherDetailsViewModelFactory(IGetForecastsUseCase getForecastsUseCase,
-								   IDayOfTheWeekImageProvider dayOfTheWeekImageProvider) {
+										  IDayOfTheWeekImageProvider dayOfTheWeekImageProvider,
+										  IForecastMapper forecastMapper) {
 		this.getForecastsUseCase = getForecastsUseCase;
 		this.dayOfTheWeekImageProvider = dayOfTheWeekImageProvider;
+		this.forecastMapper = forecastMapper;
 	}
 
 	@NonNull

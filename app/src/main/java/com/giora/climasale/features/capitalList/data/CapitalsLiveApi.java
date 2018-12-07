@@ -28,8 +28,7 @@ public class CapitalsLiveApi implements ICapitalsLiveApi {
 				if (!response.isSuccessful() || response.body() == null)
 					return;
 
-				List<CapitalResult> result = response.body();
-				capitalResults.setValue(result);
+				capitalResults.setValue(response.body());
 			}
 
 			@Override

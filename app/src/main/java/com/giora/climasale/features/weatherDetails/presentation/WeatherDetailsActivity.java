@@ -56,6 +56,8 @@ public class WeatherDetailsActivity extends AppCompatActivity {
 		if (capitalViewModel == null)
 			return;
 
+		weatherDetailsViewModel.getForecasts(new LatLng(31.5, 34.75));
+
 		initMap();
 		getForecasts();
 	}
