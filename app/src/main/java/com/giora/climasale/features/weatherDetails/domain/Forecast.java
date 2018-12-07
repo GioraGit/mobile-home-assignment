@@ -9,7 +9,7 @@ public class Forecast {
 	private final Temperature maxTemperature;
 	private final Precipitation precipitation;
 
-	Forecast(Date date,
+	public Forecast(Date date,
 			 Temperature minTemperature,
 			 Temperature maxTemperature,
 			 Precipitation precipitation) {
@@ -17,5 +17,17 @@ public class Forecast {
 		this.minTemperature = minTemperature;
 		this.maxTemperature = maxTemperature;
 		this.precipitation = precipitation;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public Temperature getMinTemperature() {
+		return minTemperature;
+	}
+
+	public Temperature getMaxTemperature() {
+		return maxTemperature;
 	}
 }

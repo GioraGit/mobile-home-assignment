@@ -1,6 +1,6 @@
 package com.giora.climasale.features.weatherDetails.domain;
 
-enum TemperatureUnits {
+public enum TemperatureUnits {
 	Celsius,
 	Fahrenheit
 }

@@ -1,12 +1,20 @@
 package com.giora.climasale.features.weatherDetails.domain;
 
-class Temperature {
+public class Temperature {
 
 	private final double temperature;
 	private final TemperatureUnits temperatureUnits;
 
-	Temperature(double temperature, TemperatureUnits temperatureUnits) {
+	public Temperature(double temperature, TemperatureUnits temperatureUnits) {
 		this.temperature = temperature;
 		this.temperatureUnits = temperatureUnits;
+	}
+
+	public double getTemperature() {
+		return temperature;
+	}
+
+	public TemperatureUnits getTemperatureUnits() {
+		return temperatureUnits;
 	}
 }

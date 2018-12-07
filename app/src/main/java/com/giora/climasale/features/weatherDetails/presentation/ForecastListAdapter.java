@@ -12,7 +12,7 @@ import java.util.List;
 
 class ForecastListAdapter extends RecyclerView.Adapter<ForecastViewHolder>{
 
-	private final List<ForecastViewModel> forecastViewModels;
+	private List<ForecastViewModel> forecastViewModels;
 
 	ForecastListAdapter(List<ForecastViewModel> forecastViewModels) {
 		this.forecastViewModels = forecastViewModels;
@@ -34,5 +34,10 @@ class ForecastListAdapter extends RecyclerView.Adapter<ForecastViewHolder>{
 	@Override
 	public int getItemCount() {
 		return forecastViewModels.size();
+	}
+
+	public void setForecastViewModels(List<ForecastViewModel> forecastViewModels) {
+		this.forecastViewModels = forecastViewModels;
+		notifyDataSetChanged();
 	}
 }

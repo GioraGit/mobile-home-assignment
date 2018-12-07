@@ -24,6 +24,6 @@ public class GetForecastsUseCase implements IGetForecastsUseCase {
 	@Override
 	public LiveData<List<Forecast>> getForecasts(LatLng latLng, UnitSystem unitSystem) {
 		return forecastsRepository.getForecasts(latLng, getNumberOfDays(), unitSystem,
-				new ForecastProperty[]{ForecastProperty.Temperature});
+				new ForecastProperty[]{ForecastProperty.Temperature, ForecastProperty.Precipitation});
 	}
 }

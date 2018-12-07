@@ -21,6 +21,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -56,9 +58,6 @@ public class WeatherDetailsActivity extends AppCompatActivity {
 		if (capitalViewModel == null)
 			return;
 
-		weatherDetailsViewModel.getForecasts(new LatLng(31.5, 34.75));
-
-		initMap();
 		getForecasts();
 	}
 
@@ -71,7 +70,30 @@ public class WeatherDetailsActivity extends AppCompatActivity {
 		capitalViewModel = new Gson().fromJson(capitalViewModelAsJsonString, CapitalViewModel.class);
 	}
 
-	private void initMap() {
+	private void getForecasts() {
+		final ForecastListAdapter forecastListAdapter = new ForecastListAdapter(weatherDetailsViewModel.getInitialForecasts());
+		initRecyclerView(forecastListAdapter);
+
+		latLngProvider.getForAddress(this, capitalViewModel.getMarkerAddress())
+				.observe(this, new Observer<LatLng>() {
+					@Override
+					public void onChanged(@Nullable LatLng latLng) {
+						if (latLng == null)
+							return;
+
+						initMap(latLng);
+						weatherDetailsViewModel.getForecasts(latLng)
+								.observe(WeatherDetailsActivity.this, new Observer<List<ForecastViewModel>>() {
+									@Override
+									public void onChanged(@Nullable List<ForecastViewModel> forecastViewModels) {
+										forecastListAdapter.setForecastViewModels(forecastViewModels);
+									}
+								});
+					}
+				});
+	}
+
+	private void initMap(final LatLng latLng) {
 		SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
 		if (mapFragment == null)
 			return;
@@ -79,25 +101,10 @@ public class WeatherDetailsActivity extends AppCompatActivity {
 		mapFragment.getMapAsync(new OnMapReadyCallback() {
 			@Override
 			public void onMapReady(GoogleMap googleMap) {
-				final GoogleMap finalGoogleMap = googleMap;
-				latLngProvider.getForAddress(WeatherDetailsActivity.this, capitalViewModel.getMarkerAddress())
-						.observe(WeatherDetailsActivity.this, new Observer<LatLng>() {
-							@Override
-							public void onChanged(@Nullable LatLng latLng) {
-								if (latLng == null)
-									return;
-
-								finalGoogleMap.addMarker(new MarkerOptions().position(latLng).title(capitalViewModel.getMarkerAddress()));
-								finalGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, MAP_ZOOM_LEVEL));
-							}
-						});
+				googleMap.addMarker(new MarkerOptions().position(latLng).title(capitalViewModel.getMarkerAddress()));
+				googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, MAP_ZOOM_LEVEL));
 			}
 		});
-	}
-
-	private void getForecasts() {
-		ForecastListAdapter forecastListAdapter = new ForecastListAdapter(weatherDetailsViewModel.getInitialForecasts());
-		initRecyclerView(forecastListAdapter);
 	}
 
 	private void initRecyclerView(ForecastListAdapter forecastListAdapter) {
