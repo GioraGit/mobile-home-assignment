@@ -9,4 +9,5 @@
 	<string name="title_activity_maps">Map</string>
 	<string name="climacell_api_key_name">apikey</string>
 	<string name="climacell_api_key_value">mFW54hIC4r5puNkKBrcfQ3Xy3dqFYXCJ</string>
+	<string name="toggle_unit_system_action">Toggle unit system</string>
 </resources>

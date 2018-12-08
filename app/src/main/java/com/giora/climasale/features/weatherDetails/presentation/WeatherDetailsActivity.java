@@ -8,6 +8,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
@@ -38,9 +40,6 @@ public class WeatherDetailsActivity extends AppCompatActivity {
 	@BindView(R.id.list)
 	RecyclerView forecastList;
 
-	@BindView(R.id.button)
-	Button toggleButton;
-
 	@Inject
 	IWeatherDetailsViewModelFactory weatherDetailsViewModelFactory;
 
@@ -64,13 +63,22 @@ public class WeatherDetailsActivity extends AppCompatActivity {
 			return;
 
 		getForecasts();
+	}
 
-		toggleButton.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				weatherDetailsViewModel.toggleUnitSystem();
-			}
-		});
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.menu_weather_details, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if (item.getItemId() == R.id.toggle_unit_system_action) {
+			weatherDetailsViewModel.toggleUnitSystem();
+			return true;
+		}
+
+		return super.onOptionsItemSelected(item);
 	}
 
 	private CapitalViewModel getCapitalViewModelFromIntent() {
