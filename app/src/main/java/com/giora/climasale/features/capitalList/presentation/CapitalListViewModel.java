@@ -12,12 +12,12 @@ import com.giora.climasale.features.capitalList.domain.IGetCapitalsUseCase;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CapitalListViewModel extends ViewModel {
+class CapitalListViewModel extends ViewModel {
 
 	private final IGetCapitalsUseCase getCapitalsUseCase;
 	private final ICapitalMapper capitalMapper;
 
-	public CapitalListViewModel(IGetCapitalsUseCase getCapitalsUseCase,
+	CapitalListViewModel(IGetCapitalsUseCase getCapitalsUseCase,
 								ICapitalMapper capitalMapper) {
 		this.getCapitalsUseCase = getCapitalsUseCase;
 		this.capitalMapper = capitalMapper;

@@ -8,6 +8,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.Button;
 
 import com.giora.climasale.R;
 import com.giora.climasale.features.capitalList.presentation.CapitalViewModel;
@@ -36,6 +38,9 @@ public class WeatherDetailsActivity extends AppCompatActivity {
 	@BindView(R.id.list)
 	RecyclerView forecastList;
 
+	@BindView(R.id.button)
+	Button toggleButton;
+
 	@Inject
 	IWeatherDetailsViewModelFactory weatherDetailsViewModelFactory;
 
@@ -54,20 +59,27 @@ public class WeatherDetailsActivity extends AppCompatActivity {
 		ComponentManager.getComponent().inject(this);
 		weatherDetailsViewModel = ViewModelProviders.of(this, weatherDetailsViewModelFactory).get(WeatherDetailsViewModel.class);
 
-		setCapitalViewModel();
+		capitalViewModel = getCapitalViewModelFromIntent();
 		if (capitalViewModel == null)
 			return;
 
 		getForecasts();
+
+		toggleButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				weatherDetailsViewModel.toggleUnitSystem();
+			}
+		});
 	}
 
-	private void setCapitalViewModel() {
+	private CapitalViewModel getCapitalViewModelFromIntent() {
 		Intent intent = getIntent();
 		String capitalViewModelAsJsonString = intent.getStringExtra(CAPITAL_INTENT_EXTRA_KEY);
 		if (capitalViewModelAsJsonString == null)
-			return;
+			return null;
 
-		capitalViewModel = new Gson().fromJson(capitalViewModelAsJsonString, CapitalViewModel.class);
+		return new Gson().fromJson(capitalViewModelAsJsonString, CapitalViewModel.class);
 	}
 
 	private void getForecasts() {

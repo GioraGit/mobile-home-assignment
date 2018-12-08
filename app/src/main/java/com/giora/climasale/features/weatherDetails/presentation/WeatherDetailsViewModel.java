@@ -17,13 +17,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class WeatherDetailsViewModel extends ViewModel {
+class WeatherDetailsViewModel extends ViewModel {
 
 	private final IGetForecastsUseCase getForecastsUseCase;
 	private final IDayOfTheWeekImageProvider dayOfTheWeekImageProvider;
 	private final IForecastMapper forecastMapper;
 
-	public WeatherDetailsViewModel(IGetForecastsUseCase getForecastsUseCase,
+	WeatherDetailsViewModel(IGetForecastsUseCase getForecastsUseCase,
 								   IDayOfTheWeekImageProvider dayOfTheWeekImageProvider,
 								   IForecastMapper forecastMapper) {
 		this.getForecastsUseCase = getForecastsUseCase;
@@ -46,7 +46,7 @@ public class WeatherDetailsViewModel extends ViewModel {
 
 	@NonNull
 	LiveData<List<ForecastViewModel>> getForecasts(LatLng latLng) {
-		LiveData<List<Forecast>> forecasts = getForecastsUseCase.getForecasts(latLng, getCurrentUnitSystem());
+		LiveData<List<Forecast>> forecasts = getForecastsUseCase.getForecasts(latLng, getInitialUnitSystem());
 		return Transformations.map(forecasts, new Function<List<Forecast>, List<ForecastViewModel>>() {
 			@Override
 			public List<ForecastViewModel> apply(List<Forecast> input) {
@@ -62,7 +62,11 @@ public class WeatherDetailsViewModel extends ViewModel {
 		});
 	}
 
-	UnitSystem getCurrentUnitSystem() {
+	private UnitSystem getInitialUnitSystem() {
 		return UnitSystem.Metric;
+	}
+
+	void toggleUnitSystem() {
+		getForecastsUseCase.toggleUnitSystem();
 	}
 }

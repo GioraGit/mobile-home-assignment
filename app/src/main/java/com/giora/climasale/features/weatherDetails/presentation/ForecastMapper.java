@@ -1,10 +1,7 @@
 package com.giora.climasale.features.weatherDetails.presentation;
 
 import com.giora.climasale.features.weatherDetails.domain.Forecast;
-import com.giora.climasale.features.weatherDetails.domain.Precipitation;
-import com.giora.climasale.features.weatherDetails.domain.PrecipitationUnits;
-import com.giora.climasale.features.weatherDetails.domain.Temperature;
-import com.giora.climasale.features.weatherDetails.domain.TemperatureUnits;
+import com.giora.climasale.features.weatherDetails.domain.UnitSystem;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -23,43 +20,20 @@ public class ForecastMapper implements IForecastMapper {
 		return forecastViewModel;
 	}
 
-	private void mapPrecipitation(ForecastViewModel forecastViewModel, Forecast forecast) {
-		Precipitation precipitation = forecast.getPrecipitation();
-		if (precipitation == null)
-			return;
-
-		forecastViewModel.setPrecipitation(getPrecipitationAsString(precipitation));
-	}
-
-	private String getPrecipitationAsString(Precipitation precipitation) {
-		return String.format("%.2f %s", precipitation.getPrecipitation(), mapPrecipitationUnitsToString(precipitation.getPrecipitationUnits()));
-	}
-
-	private String mapPrecipitationUnitsToString(PrecipitationUnits precipitationUnits) {
-		switch (precipitationUnits) {
-			case MillimetersPerHour:
-				return "mm/hr";
-			case InchesPerHour:
-				return "in/hr";
-			default:
-				return "mm/hr";
-		}
-	}
-
 	private void mapMaxTemperature(ForecastViewModel forecastViewModel, Forecast forecast) {
-		Temperature temperature = forecast.getMaxTemperature();
+		Double temperature = forecast.getMaxTemperature();
 		if (temperature == null)
 			return;
 
-		forecastViewModel.setMaxTemperature(getTemperatureAsString(temperature));
+		forecastViewModel.setMaxTemperature(getTemperatureAsString(temperature, forecast.getUnitSystem()));
 	}
 
 	private void mapMinTemperature(ForecastViewModel forecastViewModel, Forecast forecast) {
-		Temperature temperature = forecast.getMinTemperature();
+		Double temperature = forecast.getMinTemperature();
 		if (temperature == null)
 			return;
 
-		forecastViewModel.setMinTemperature(getTemperatureAsString(temperature));
+		forecastViewModel.setMinTemperature(getTemperatureAsString(temperature, forecast.getUnitSystem()));
 	}
 
 	private void mapDate(ForecastViewModel forecastViewModel, Forecast forecast) {
@@ -70,19 +44,42 @@ public class ForecastMapper implements IForecastMapper {
 		forecastViewModel.setDate(new SimpleDateFormat("dd.MM.yyyy").format(date));
 	}
 
-	private String getTemperatureAsString(Temperature temperature) {
-		return String.format("%.2f %s", temperature.getTemperature(), mapTemepratureUnitsToString(temperature.getTemperatureUnits()));
+	private String getTemperatureAsString(Double temperature, UnitSystem unitSystem) {
+		return String.format("%.2f %s", temperature, mapTemepratureUnitsToString(unitSystem));
 	}
 
-	private String mapTemepratureUnitsToString(TemperatureUnits temperatureUnits) {
-		switch (temperatureUnits) {
-			case Celsius:
+	private String mapTemepratureUnitsToString(UnitSystem unitSystem) {
+		switch (unitSystem) {
+			case Metric:
 				return "°C";
-			case Fahrenheit:
+			case Imperial:
 				return "°F";
 			default:
 				return "°C";
 
+		}
+	}
+
+	private void mapPrecipitation(ForecastViewModel forecastViewModel, Forecast forecast) {
+		Double precipitation = forecast.getPrecipitation();
+		if (precipitation == null)
+			return;
+
+		forecastViewModel.setPrecipitation(getPrecipitationAsString(precipitation, forecast.getUnitSystem()));
+	}
+
+	private String getPrecipitationAsString(Double precipitation, UnitSystem unitSystem) {
+		return String.format("%.2f %s", precipitation, mapPrecipitationUnitsToString(unitSystem));
+	}
+
+	private String mapPrecipitationUnitsToString(UnitSystem unitSystem) {
+		switch (unitSystem) {
+			case Metric:
+				return "mm/hr";
+			case Imperial:
+				return "in/hr";
+			default:
+				return "mm/hr";
 		}
 	}
 }

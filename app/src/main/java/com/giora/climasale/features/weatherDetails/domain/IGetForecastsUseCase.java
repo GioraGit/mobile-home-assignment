@@ -12,4 +12,6 @@ public interface IGetForecastsUseCase {
 
 	@NonNull
 	LiveData<List<Forecast>> getForecasts(LatLng latLng, UnitSystem unitSystem);
+
+	void toggleUnitSystem();
 }

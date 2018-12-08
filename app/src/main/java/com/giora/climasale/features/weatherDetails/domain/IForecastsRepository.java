@@ -12,4 +12,6 @@ public interface IForecastsRepository {
 	@NonNull
 	LiveData<List<Forecast>> getForecasts(LatLng latLng, int numberOfDays, UnitSystem unitSystem,
 										  ForecastProperty[] forecastProperties);
+
+	void toggleUnitSystem();
 }

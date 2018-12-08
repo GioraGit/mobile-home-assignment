@@ -26,4 +26,9 @@ public class GetForecastsUseCase implements IGetForecastsUseCase {
 		return forecastsRepository.getForecasts(latLng, getNumberOfDays(), unitSystem,
 				new ForecastProperty[]{ForecastProperty.Temperature, ForecastProperty.Precipitation});
 	}
+
+	@Override
+	public void toggleUnitSystem() {
+		forecastsRepository.toggleUnitSystem();
+	}
 }

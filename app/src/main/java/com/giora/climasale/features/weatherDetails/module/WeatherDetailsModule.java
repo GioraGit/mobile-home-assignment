@@ -8,6 +8,10 @@ import com.giora.climasale.features.weatherDetails.data.IForecastRemoteApi;
 import com.giora.climasale.features.weatherDetails.data.IForecastResultMapper;
 import com.giora.climasale.features.weatherDetails.data.IForecastsFieldsParameterBuilder;
 import com.giora.climasale.features.weatherDetails.data.IForecastsLiveApi;
+import com.giora.climasale.features.weatherDetails.data.IPrecipitationConverter;
+import com.giora.climasale.features.weatherDetails.data.ITemperatureConverter;
+import com.giora.climasale.features.weatherDetails.data.PrecipitationConverter;
+import com.giora.climasale.features.weatherDetails.data.TemperatureConverter;
 import com.giora.climasale.features.weatherDetails.domain.GetForecastsUseCase;
 import com.giora.climasale.features.weatherDetails.domain.IForecastsRepository;
 import com.giora.climasale.features.weatherDetails.domain.IGetForecastsUseCase;
@@ -54,10 +58,25 @@ public class WeatherDetailsModule {
 	}
 
 	@Provides
+	@Singleton
+	ITemperatureConverter provideTemperatureConverter() {
+		return new TemperatureConverter();
+	}
+
+	@Provides
+	@Singleton
+	IPrecipitationConverter providePrecipitationConverter() {
+		return new PrecipitationConverter();
+	}
+
+	@Provides
 	IForecastsRepository provideForecastsRepository(IForecastsLiveApi forecastsLiveApi,
 													IForecastsFieldsParameterBuilder forecastsFieldsParameterBuilder,
-													IForecastResultMapper forecastResultMapper) {
-		return new ForecastsRepository(forecastsLiveApi, forecastsFieldsParameterBuilder, forecastResultMapper);
+													IForecastResultMapper forecastResultMapper,
+													ITemperatureConverter temperatureConverter,
+													IPrecipitationConverter precipitationConverter) {
+		return new ForecastsRepository(forecastsLiveApi, forecastsFieldsParameterBuilder,
+				forecastResultMapper, temperatureConverter, precipitationConverter);
 	}
 
 	@Provides
@@ -70,7 +89,6 @@ public class WeatherDetailsModule {
 		return new ForecastMapper();
 	}
 
-	@Singleton
 	@Provides
 	IWeatherDetailsViewModelFactory provideWeatherDetailsViewModelFactory(IGetForecastsUseCase getForecastsUseCase,
 																		  IDayOfTheWeekImageProvider dayOfTheWeekImageProvider,

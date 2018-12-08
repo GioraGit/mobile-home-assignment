@@ -1,10 +1,7 @@
 package com.giora.climasale.features.weatherDetails.data;
 
 import com.giora.climasale.features.weatherDetails.domain.Forecast;
-import com.giora.climasale.features.weatherDetails.domain.Precipitation;
-import com.giora.climasale.features.weatherDetails.domain.PrecipitationUnits;
-import com.giora.climasale.features.weatherDetails.domain.Temperature;
-import com.giora.climasale.features.weatherDetails.domain.TemperatureUnits;
+import com.giora.climasale.features.weatherDetails.domain.UnitSystem;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -12,15 +9,15 @@ import java.util.Date;
 
 public class ForecastResultMapper implements IForecastResultMapper {
 	@Override
-	public Forecast map(ForecastResult forecastResult) {
+	public Forecast map(ForecastResult forecastResult, UnitSystem unitSystem) {
 		if (forecastResult == null)
 			return null;
 
-		return new Forecast(getDate(forecastResult.observationTime), getMinTemperature(forecastResult.temperatures),
+		return new Forecast(getDate(forecastResult.observationTime), unitSystem, getMinTemperature(forecastResult.temperatures),
 				getMaxTemperature(forecastResult.temperatures), getPrecipitation(forecastResult.precipitationArray));
 	}
 
-	private Temperature getMaxTemperature(TemperatureResult[] temperatures) {
+	private Double getMaxTemperature(TemperatureResult[] temperatures) {
 		if (temperatures == null || temperatures.length< 2)
 			return null;
 
@@ -28,10 +25,10 @@ public class ForecastResultMapper implements IForecastResultMapper {
 		if (maxTemperatureResult == null)
 			return null;
 
-		return new Temperature(maxTemperatureResult.value, mapTemperatureUnits(maxTemperatureResult.units));
+		return maxTemperatureResult.value;
 	}
 
-	private Temperature getMinTemperature(TemperatureResult[] temperatures) {
+	private Double getMinTemperature(TemperatureResult[] temperatures) {
 		if (temperatures == null || temperatures.length< 2)
 			return null;
 
@@ -39,7 +36,7 @@ public class ForecastResultMapper implements IForecastResultMapper {
 		if (minTemperatureResult == null)
 			return null;
 
-		return new Temperature(minTemperatureResult.value, mapTemperatureUnits(minTemperatureResult.units));
+		return minTemperatureResult.value;
 	}
 
 	private Date getDate(ObservationTimeResult observationTimeResult) {
@@ -53,14 +50,7 @@ public class ForecastResultMapper implements IForecastResultMapper {
 		}
 	}
 
-	private TemperatureUnits mapTemperatureUnits(String temperatureUnits) {
-		if (temperatureUnits.equals("C"))
-			return TemperatureUnits.Celsius;
-
-		return TemperatureUnits.Fahrenheit;
-	}
-
-	private Precipitation getPrecipitation(PrecipitationResult[] precipitationArray) {
+	private Double getPrecipitation(PrecipitationResult[] precipitationArray) {
 		if (precipitationArray == null || precipitationArray.length == 0)
 			return null;
 
@@ -72,13 +62,6 @@ public class ForecastResultMapper implements IForecastResultMapper {
 		if (precipitationInstanceResult == null)
 			return null;
 
-		return new Precipitation(precipitationInstanceResult.value, mapPrecipitationUnits(precipitationInstanceResult.units));
-	}
-
-	private PrecipitationUnits mapPrecipitationUnits(String precipitationUnits) {
-		if (precipitationUnits.equals("mm/hr"))
-			return PrecipitationUnits.MillimetersPerHour;
-
-		return PrecipitationUnits.InchesPerHour;
+		return precipitationInstanceResult.value;
 	}
 }
