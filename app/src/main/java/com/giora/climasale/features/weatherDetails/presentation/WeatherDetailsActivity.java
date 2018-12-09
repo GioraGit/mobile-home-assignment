@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -66,6 +67,7 @@ public class WeatherDetailsActivity extends AppCompatActivity {
 			return;
 
 		initAppBarLayout();
+		setTitle();
 		getForecasts();
 	}
 
@@ -104,6 +106,14 @@ public class WeatherDetailsActivity extends AppCompatActivity {
 			}
 		});
 		params.setBehavior(behavior);
+	}
+
+	private void setTitle() {
+		ActionBar actionBar = getSupportActionBar();
+		if (actionBar == null)
+			return;
+
+		actionBar.setTitle(capitalViewModel.getCity());
 	}
 
 	private void getForecasts() {
