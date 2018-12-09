@@ -113,7 +113,7 @@ public class WeatherDetailsActivity extends AppCompatActivity {
 		if (actionBar == null)
 			return;
 
-		actionBar.setTitle(capitalViewModel.getCity());
+		actionBar.setTitle(capitalViewModel.getMarkerAddress());
 	}
 
 	private void getForecasts() {
