@@ -5,7 +5,8 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,7 +19,6 @@ import com.giora.climasale.services.ioc.component.ComponentManager;
 import com.giora.climasale.services.location.ILatLngProvider;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
@@ -37,8 +37,8 @@ public class WeatherDetailsActivity extends AppCompatActivity {
 	public final static String CAPITAL_INTENT_EXTRA_KEY = "capitalIntentExtraKey";
 	private static final int MAP_ZOOM_LEVEL = 10;
 
-	@BindView(R.id.map)
-	MapView mapView;
+	@BindView(R.id.app_bar_layout)
+	AppBarLayout appBarLayout;
 
 	@BindView(R.id.list)
 	RecyclerView forecastList;
@@ -56,7 +56,7 @@ public class WeatherDetailsActivity extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		setContentView(R.layout.activity_weather_details_2);
+		setContentView(R.layout.activity_weather_details);
 		ButterKnife.bind(this);
 		ComponentManager.getComponent().inject(this);
 		weatherDetailsViewModel = ViewModelProviders.of(this, weatherDetailsViewModelFactory).get(WeatherDetailsViewModel.class);
@@ -65,38 +65,8 @@ public class WeatherDetailsActivity extends AppCompatActivity {
 		if (capitalViewModel == null)
 			return;
 
-		mapView.onCreate(savedInstanceState);
+		initAppBarLayout();
 		getForecasts();
-	}
-
-	@Override
-	protected void onStart() {
-		mapView.onStart();
-		super.onStart();
-	}
-
-	@Override
-	protected void onResume() {
-		mapView.onResume();
-		super.onResume();
-	}
-
-	@Override
-	protected void onPause() {
-		mapView.onPause();
-		super.onPause();
-	}
-
-	@Override
-	protected void onStop() {
-		mapView.onStop();
-		super.onStop();
-	}
-
-	@Override
-	protected void onDestroy() {
-		mapView.onDestroy();
-		super.onDestroy();
 	}
 
 	@Override
@@ -124,6 +94,18 @@ public class WeatherDetailsActivity extends AppCompatActivity {
 		return new Gson().fromJson(capitalViewModelAsJsonString, CapitalViewModel.class);
 	}
 
+	private void initAppBarLayout() {
+		CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) appBarLayout.getLayoutParams();
+		AppBarLayout.Behavior behavior = new AppBarLayout.Behavior();
+		behavior.setDragCallback(new AppBarLayout.Behavior.DragCallback() {
+			@Override
+			public boolean canDrag(AppBarLayout appBarLayout) {
+				return false;
+			}
+		});
+		params.setBehavior(behavior);
+	}
+
 	private void getForecasts() {
 		final ForecastListAdapter forecastListAdapter = new ForecastListAdapter(weatherDetailsViewModel.getInitialForecasts());
 		initRecyclerView(forecastListAdapter);
@@ -148,19 +130,11 @@ public class WeatherDetailsActivity extends AppCompatActivity {
 	}
 
 	private void initMap(final LatLng latLng) {
-//		SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-//		if (mapFragment == null)
-//			return;
-//
-//		mapFragment.getMapAsync(new OnMapReadyCallback() {
-//			@Override
-//			public void onMapReady(GoogleMap googleMap) {
-//				googleMap.addMarker(new MarkerOptions().position(latLng).title(capitalViewModel.getMarkerAddress()));
-//				googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, MAP_ZOOM_LEVEL));
-//			}
-//		});
+		SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+		if (mapFragment == null)
+			return;
 
-		mapView.getMapAsync(new OnMapReadyCallback() {
+		mapFragment.getMapAsync(new OnMapReadyCallback() {
 			@Override
 			public void onMapReady(GoogleMap googleMap) {
 				googleMap.addMarker(new MarkerOptions().position(latLng).title(capitalViewModel.getMarkerAddress()));
