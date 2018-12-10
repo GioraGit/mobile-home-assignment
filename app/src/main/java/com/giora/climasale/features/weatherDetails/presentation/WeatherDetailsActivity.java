@@ -132,7 +132,7 @@ public class WeatherDetailsActivity extends AppCompatActivity {
 		if (actionBar == null)
 			return;
 
-		actionBar.setTitle(capitalViewModel.getMarkerAddress());
+		actionBar.setTitle(capitalViewModel.getTitle());
 		actionBar.setSubtitle(capitalViewModel.getCountry());
 	}
 

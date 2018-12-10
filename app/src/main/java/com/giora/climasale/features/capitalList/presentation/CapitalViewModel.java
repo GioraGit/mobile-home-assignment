@@ -15,6 +15,10 @@ public class CapitalViewModel {
 	}
 
 	public String getMarkerAddress() {
+		return city.isEmpty() ? country : String.format("%s, %s", city, country);
+	}
+
+	public String getTitle() {
 		return city.isEmpty() ? country : city;
 	}
 
