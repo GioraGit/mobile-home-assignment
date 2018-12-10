@@ -2,6 +2,7 @@ package com.giora.climasale.features.capitalList.presentation;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
@@ -9,11 +10,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.SearchView;
 
 import com.giora.climasale.R;
+import com.giora.climasale.features.seeOnMap.presentation.SeeOnMapActivity;
 import com.giora.climasale.services.ioc.component.ComponentManager;
 
 import java.util.List;
@@ -55,6 +58,21 @@ public class CapitalListActivity extends AppCompatActivity {
 		getMenuInflater().inflate(R.menu.menu_capital_list, menu);
 		initSearchAction(menu);
 		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if (item.getItemId() == R.id.see_on_map_action) {
+			startSeeOnMapActivity();
+			return true;
+		}
+
+		return super.onOptionsItemSelected(item);
+	}
+
+	private void startSeeOnMapActivity() {
+		Intent startOnMapIntent = new Intent(this, SeeOnMapActivity.class);
+		startActivity(startOnMapIntent);
 	}
 
 	private void loadCapitals() {

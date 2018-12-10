@@ -22,6 +22,8 @@ public class CapitalFieldsParameterBuilder implements ICapitalFieldsParameterBui
 				return "name";
 			case FlagImageUrl:
 				return "flag";
+			case LatLng:
+				return "latlng";
 			default:
 				return "";
 		}

@@ -114,6 +114,7 @@ public class WeatherDetailsActivity extends AppCompatActivity {
 			return;
 
 		actionBar.setTitle(capitalViewModel.getMarkerAddress());
+		actionBar.setSubtitle(capitalViewModel.getCountry());
 	}
 
 	private void getForecasts() {

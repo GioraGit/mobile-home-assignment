@@ -7,6 +7,8 @@ public class CapitalViewModel {
 	String city = "";
 	String country = "";
 	String flagImageUrl = "";
+	double latitude;
+	double longitude;
 
 	public String getCity() {
 		return city.isEmpty() ? NO_CAPITAL_CITY_TEXT : city;
@@ -14,5 +16,17 @@ public class CapitalViewModel {
 
 	public String getMarkerAddress() {
 		return city.isEmpty() ? country : city;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public double getLatitude() {
+		return latitude;
+	}
+
+	public double getLongitude() {
+		return longitude;
 	}
 }

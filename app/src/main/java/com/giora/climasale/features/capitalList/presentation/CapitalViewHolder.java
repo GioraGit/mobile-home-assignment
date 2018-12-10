@@ -43,7 +43,7 @@ class CapitalViewHolder extends RecyclerView.ViewHolder {
 	void setCapital(CapitalViewModel capitalViewModel) {
 		currentCapitalViewModel = capitalViewModel;
 		cityTextView.setText(capitalViewModel.getCity());
-		countryTextView.setText(capitalViewModel.country);
+		countryTextView.setText(capitalViewModel.getCountry());
 		loadFlagImage(capitalViewModel.flagImageUrl);
 	}
 
