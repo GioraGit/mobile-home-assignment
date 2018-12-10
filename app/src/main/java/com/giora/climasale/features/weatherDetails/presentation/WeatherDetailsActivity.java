@@ -87,6 +87,12 @@ public class WeatherDetailsActivity extends AppCompatActivity {
 		return super.onOptionsItemSelected(item);
 	}
 
+	@Override
+	public boolean onSupportNavigateUp() {
+		finish();
+		return true;
+	}
+
 	private CapitalViewModel getCapitalViewModelFromIntent() {
 		Intent intent = getIntent();
 		String capitalViewModelAsJsonString = intent.getStringExtra(CAPITAL_INTENT_EXTRA_KEY);
@@ -97,6 +103,19 @@ public class WeatherDetailsActivity extends AppCompatActivity {
 	}
 
 	private void initAppBarLayout() {
+		enableMovingMap();
+		showBackAction();
+	}
+
+	private void showBackAction() {
+		ActionBar actionBar = getSupportActionBar();
+		if (actionBar == null)
+			return;
+
+		actionBar.setDisplayHomeAsUpEnabled(true);
+	}
+
+	private void enableMovingMap() {
 		CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) appBarLayout.getLayoutParams();
 		AppBarLayout.Behavior behavior = new AppBarLayout.Behavior();
 		behavior.setDragCallback(new AppBarLayout.Behavior.DragCallback() {

@@ -54,11 +54,15 @@ class CapitalViewHolder extends RecyclerView.ViewHolder {
 				if (currentCapitalViewModel == null)
 					return;
 
-				Intent weatherDetailsIntent = new Intent(containingActivity, WeatherDetailsActivity.class);
-				weatherDetailsIntent.putExtra(WeatherDetailsActivity.CAPITAL_INTENT_EXTRA_KEY, new Gson().toJson(currentCapitalViewModel));
-				containingActivity.startActivity(weatherDetailsIntent);
+				startWeatherDetailsActivity();
 			}
 		});
+	}
+
+	private void startWeatherDetailsActivity() {
+		Intent weatherDetailsIntent = new Intent(containingActivity.getApplicationContext(), WeatherDetailsActivity.class);
+		weatherDetailsIntent.putExtra(WeatherDetailsActivity.CAPITAL_INTENT_EXTRA_KEY, new Gson().toJson(currentCapitalViewModel));
+		containingActivity.startActivity(weatherDetailsIntent);
 	}
 
 	private void loadFlagImage(String flagImageUrl) {

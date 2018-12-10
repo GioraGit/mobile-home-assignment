@@ -22,11 +22,7 @@
 		<activity
 			android:name=".features.weatherDetails.presentation.WeatherDetailsActivity"
 			android:label="@string/title_activity_weather_details"
-			android:parentActivityName=".features.capitalList.presentation.CapitalListActivity"
 			android:theme="@style/AppTheme">
-			<meta-data
-				android:name="android.support.PARENT_ACTIVITY"
-				android:value="com.giora.climasale.features.capitalList.presentation.CapitalListActivity" />
 		</activity>
 		<activity
 			android:name=".features.seeOnMap.presentation.SeeOnMapActivity"

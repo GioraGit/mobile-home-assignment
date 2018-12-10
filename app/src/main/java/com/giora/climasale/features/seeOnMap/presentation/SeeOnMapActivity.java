@@ -2,6 +2,7 @@ package com.giora.climasale.features.seeOnMap.presentation;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -10,13 +11,16 @@ import com.giora.climasale.R;
 import com.giora.climasale.features.capitalList.presentation.CapitalListViewModel;
 import com.giora.climasale.features.capitalList.presentation.CapitalViewModel;
 import com.giora.climasale.features.capitalList.presentation.ICapitalListViewModelFactory;
+import com.giora.climasale.features.weatherDetails.presentation.WeatherDetailsActivity;
 import com.giora.climasale.services.ioc.component.ComponentManager;
 import com.giora.climasale.services.location.ILatLngProvider;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.gson.Gson;
 
 import java.util.List;
 
@@ -32,6 +36,7 @@ public class SeeOnMapActivity extends AppCompatActivity {
 
 	private CapitalListViewModel seeOnMapViewModel;
 	private GoogleMap googleMap;
+	private GoogleMap.OnMarkerClickListener onMarkerClickListener;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +46,7 @@ public class SeeOnMapActivity extends AppCompatActivity {
 		ComponentManager.getComponent().inject(this);
 		seeOnMapViewModel = ViewModelProviders.of(this, capitalListViewModelFactory).get(CapitalListViewModel.class);
 
+		setOnMarkerClickListener();
 		initMap();
 	}
 
@@ -53,8 +59,8 @@ public class SeeOnMapActivity extends AppCompatActivity {
 					markerOptions
 							.position(new LatLng(capitalViewModel.getLatitude(), capitalViewModel.getLongitude()))
 							.title(capitalViewModel.getCountry());
-					googleMap.addMarker(markerOptions);
-
+					Marker marker = googleMap.addMarker(markerOptions);
+					marker.setTag(capitalViewModel);
 				}
 			}
 		});
@@ -69,8 +75,33 @@ public class SeeOnMapActivity extends AppCompatActivity {
 			@Override
 			public void onMapReady(GoogleMap googleMap) {
 				SeeOnMapActivity.this.googleMap = googleMap;
+				SeeOnMapActivity.this.googleMap.setOnMarkerClickListener(onMarkerClickListener);
 				loadMarkers();
 			}
 		});
+	}
+
+	private void setOnMarkerClickListener() {
+		onMarkerClickListener = new GoogleMap.OnMarkerClickListener() {
+			@Override
+			public boolean onMarkerClick(Marker marker) {
+				if (marker == null)
+					return false;
+
+				Object tag = marker.getTag();
+				if (!(tag instanceof CapitalViewModel))
+					return false;
+
+				CapitalViewModel capitalViewModel = (CapitalViewModel) tag;
+				startWeatherDetailsActivity(capitalViewModel);
+				return false;
+			}
+		};
+	}
+
+	private void startWeatherDetailsActivity(CapitalViewModel capitalViewModel) {
+		Intent weatherDetailsIntent = new Intent(getApplicationContext(), WeatherDetailsActivity.class);
+		weatherDetailsIntent.putExtra(WeatherDetailsActivity.CAPITAL_INTENT_EXTRA_KEY, new Gson().toJson(capitalViewModel));
+		startActivity(weatherDetailsIntent);
 	}
 }

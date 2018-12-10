@@ -71,7 +71,7 @@ public class CapitalListActivity extends AppCompatActivity {
 	}
 
 	private void startSeeOnMapActivity() {
-		Intent startOnMapIntent = new Intent(this, SeeOnMapActivity.class);
+		Intent startOnMapIntent = new Intent(getApplicationContext(), SeeOnMapActivity.class);
 		startActivity(startOnMapIntent);
 	}
 
