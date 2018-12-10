@@ -28,31 +28,29 @@
 
 	</android.support.design.widget.AppBarLayout>
 
-	<android.support.constraint.ConstraintLayout
+	<ProgressBar
+		android:id="@+id/progressBar"
+		style="?android:attr/progressBarStyle"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_gravity="center" />
+
+	<android.support.v7.widget.RecyclerView
+		android:id="@+id/list"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		android:background="@color/background"
-		app:layout_behavior="@string/appbar_scrolling_view_behavior">
+		app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-		<ProgressBar
-			android:id="@+id/progressBar"
-			style="?android:attr/progressBarStyle"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			app:layout_constraintBottom_toBottomOf="parent"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toTopOf="parent" />
-
-		<android.support.v7.widget.RecyclerView
-			android:id="@+id/list"
-			android:layout_width="0dp"
-			android:layout_height="0dp"
-			app:layout_constraintBottom_toBottomOf="parent"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toTopOf="parent" />
-
-	</android.support.constraint.ConstraintLayout>
+	<android.support.design.widget.FloatingActionButton
+		android:id="@+id/add_place_button"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_margin="16dp"
+		android:backgroundTint="@color/fab_color"
+		android:src="@drawable/fab_plus_icon"
+		app:borderWidth="0dp"
+		app:layout_anchor="@id/list"
+		app:layout_anchorGravity="bottom|end"
+		app:layout_behavior="com.giora.climasale.services.views.ScrollAwareFABBehavior" />
 
 </android.support.design.widget.CoordinatorLayout>

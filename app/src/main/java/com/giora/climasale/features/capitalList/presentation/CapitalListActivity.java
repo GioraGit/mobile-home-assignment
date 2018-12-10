@@ -4,8 +4,9 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -31,6 +32,9 @@ public class CapitalListActivity extends AppCompatActivity {
 	@BindView(R.id.list)
 	RecyclerView capitalList;
 
+	@BindView(R.id.add_place_button)
+	FloatingActionButton addPlaceButton;
+
 	@BindView(R.id.progressBar)
 	ProgressBar progressBar;
 
@@ -50,6 +54,7 @@ public class CapitalListActivity extends AppCompatActivity {
 		ComponentManager.getComponent().inject(this);
 		capitalListViewModel = ViewModelProviders.of(this, capitalListViewModelFactory).get(CapitalListViewModel.class);
 
+		initAddPlaceButton();
 		loadCapitals();
 	}
 
@@ -68,6 +73,16 @@ public class CapitalListActivity extends AppCompatActivity {
 		}
 
 		return super.onOptionsItemSelected(item);
+	}
+
+	private void initAddPlaceButton() {
+		addPlaceButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Snackbar.make(v, "Here's a Snackbar", Snackbar.LENGTH_LONG)
+						.setAction("Action", null).show();
+			}
+		});
 	}
 
 	private void startSeeOnMapActivity() {
