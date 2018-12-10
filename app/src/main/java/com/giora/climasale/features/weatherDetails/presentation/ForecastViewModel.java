@@ -6,26 +6,26 @@ class ForecastViewModel {
 
 	@DrawableRes int dayOfTheWeekImage;
 
-	private String initialText;
-	private boolean shouldDisplayInitialText;
+	private String statusText;
+	private boolean shouldDisplayStatusText;
 
 	private String date;
 	private String minTemperature;
 	private String maxTemperature;
 	private String precipitation;
 
-	public void setInitialText(String initialText) {
-		this.initialText = initialText;
-		shouldDisplayInitialText = true;
+	public void setStatusText(String statusText) {
+		this.statusText = statusText;
+		shouldDisplayStatusText = true;
 	}
 
-	public String getInitialText() {
-		return initialText;
+	public String getStatusText() {
+		return statusText;
 	}
 
 	public void setDate(String date) {
 		this.date = date;
-		shouldDisplayInitialText = false;
+		shouldDisplayStatusText = false;
 	}
 
 	public String getDate() {
@@ -34,7 +34,7 @@ class ForecastViewModel {
 
 	public void setMaxTemperature(String maxTemperature) {
 		this.maxTemperature = maxTemperature;
-		shouldDisplayInitialText = false;
+		shouldDisplayStatusText = false;
 	}
 
 	public String getMaxTemperature() {
@@ -43,15 +43,15 @@ class ForecastViewModel {
 
 	public void setMinTemperature(String minTemperature) {
 		this.minTemperature = minTemperature;
-		shouldDisplayInitialText = false;
+		shouldDisplayStatusText = false;
 	}
 
 	public String getMinTemperature() {
 		return minTemperature;
 	}
 
-	public boolean shouldDisplayInitialText() {
-		return shouldDisplayInitialText;
+	public boolean shouldDisplayStatusText() {
+		return shouldDisplayStatusText;
 	}
 
 	public String getPrecipitation() {
@@ -60,6 +60,6 @@ class ForecastViewModel {
 
 	public void setPrecipitation(String precipitation) {
 		this.precipitation = precipitation;
-		shouldDisplayInitialText = false;
+		shouldDisplayStatusText = false;
 	}
 }

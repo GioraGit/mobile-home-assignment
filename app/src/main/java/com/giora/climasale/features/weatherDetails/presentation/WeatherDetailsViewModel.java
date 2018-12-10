@@ -36,7 +36,20 @@ class WeatherDetailsViewModel extends ViewModel {
 		List<ForecastViewModel> forecastViewModels = new ArrayList<>();
 		for (int dayIndex = 0; dayIndex < getForecastsUseCase.getNumberOfDays(); ++dayIndex) {
 			ForecastViewModel forecastViewModel = new ForecastViewModel();
-			forecastViewModel.setInitialText(ClimaSaleApp.getAppResources().getString(R.string.loading_forecast));
+			forecastViewModel.setStatusText(ClimaSaleApp.getAppResources().getString(R.string.loading_forecast));
+			forecastViewModel.dayOfTheWeekImage = dayOfTheWeekImageProvider.provideImage(dayIndex);
+			forecastViewModels.add(forecastViewModel);
+		}
+
+		return forecastViewModels;
+	}
+
+	@NonNull
+	List<ForecastViewModel> getEmptyForecasts() {
+		List<ForecastViewModel> forecastViewModels = new ArrayList<>();
+		for (int dayIndex = 0; dayIndex < getForecastsUseCase.getNumberOfDays(); ++dayIndex) {
+			ForecastViewModel forecastViewModel = new ForecastViewModel();
+			forecastViewModel.setStatusText(ClimaSaleApp.getAppResources().getString(R.string.empty_forecast));
 			forecastViewModel.dayOfTheWeekImage = dayOfTheWeekImageProvider.provideImage(dayIndex);
 			forecastViewModels.add(forecastViewModel);
 		}

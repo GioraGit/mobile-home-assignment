@@ -5,6 +5,7 @@
 	<string name="search_action">search</string>
 	<string name="search_hint">Search…</string>
 	<string name="loading_forecast">Loading forecast…</string>
+	<string name="empty_forecast">Sorry, but no forecast was found for this location.</string>
 	<string name="title_activity_weather_details">Weather Details</string>
 	<string name="title_activity_maps">Map</string>
 	<string name="climacell_api_key_name">apikey</string>
@@ -12,4 +13,7 @@
 	<string name="toggle_unit_system_action">Toggle unit system</string>
 	<string name="see_on_map_action">See on map</string>
 	<string name="title_activity_see_on_map">See on map</string>
+	<string name="title_activity_add_place">Add a place…</string>
+	<string name="add_place_instructions">Here you can add a place of interest, like your hometown, the city where you work at, or even just type in your favorite restaurant / mall / amusement park.</string>
+	<string name="add_place_disclaimer">(or any other name Google Maps can resolve)</string>
 </resources>

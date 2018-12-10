@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="#ffffff"
+	android:padding="16dp"
+	tools:context="com.giora.climasale.features.addPlace.presentation.AddPlaceActivity">
+
+	<ImageView
+		android:id="@+id/image"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="32dp"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		app:srcCompat="@drawable/pinpoint__1_" />
+
+	<TextView
+		android:id="@+id/instructions"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="8dp"
+		android:text="@string/add_place_instructions"
+		android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+		android:textColor="@android:color/black"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/image" />
+
+	<TextView
+		android:id="@+id/disclaimer"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="4dp"
+		android:text="@string/add_place_disclaimer"
+		app:layout_constraintStart_toStartOf="@id/instructions"
+		app:layout_constraintTop_toBottomOf="@id/instructions" />
+
+	<EditText
+		android:id="@+id/location"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="16dp"
+		android:hint="Location"
+		android:inputType="textPersonName"
+		android:singleLine="false"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="@id/instructions"
+		app:layout_constraintTop_toBottomOf="@id/disclaimer" />
+
+	<EditText
+		android:id="@+id/country"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="16dp"
+		android:hint="Country"
+		android:inputType="textPersonName"
+		android:singleLine="false"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="@id/instructions"
+		app:layout_constraintTop_toBottomOf="@id/location" />
+
+	<Button
+		android:id="@+id/add_button"
+		android:layout_width="wrap_content"
+		android:layout_height="0dp"
+		android:layout_marginTop="32dp"
+		android:text="Add"
+		android:enabled="false"
+		app:layout_constraintStart_toStartOf="@id/country"
+		app:layout_constraintTop_toBottomOf="@id/country" />
+</android.support.constraint.ConstraintLayout>

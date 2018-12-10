@@ -1,5 +1,7 @@
 package com.giora.climasale.services.ioc.component;
 
+import com.giora.climasale.features.addPlace.module.AddPlaceModule;
+import com.giora.climasale.features.addPlace.presentation.AddPlaceActivity;
 import com.giora.climasale.features.capitalList.module.CapitalListModule;
 import com.giora.climasale.features.capitalList.presentation.CapitalListActivity;
 import com.giora.climasale.features.seeOnMap.presentation.SeeOnMapActivity;
@@ -16,7 +18,8 @@ import dagger.Component;
 		modules = {
 				MainModule.class,
 				CapitalListModule.class,
-				WeatherDetailsModule.class
+				WeatherDetailsModule.class,
+				AddPlaceModule.class
 		}
 )
 public interface MainComponent {
@@ -25,4 +28,6 @@ public interface MainComponent {
 	void inject(WeatherDetailsActivity weatherDetailsActivity);
 
 	void inject(SeeOnMapActivity seeOnMapActivity);
+
+	void inject(AddPlaceActivity addPlaceActivity);
 }

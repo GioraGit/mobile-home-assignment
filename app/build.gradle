@@ -56,7 +56,7 @@ dependencies {
     implementation 'com.github.2coffees1team:GlideToVectorYou:v1.2.0'
 
     // Maps
-    implementation ('com.google.android.gms:play-services-maps:16.0.0') {
+    implementation('com.google.android.gms:play-services-maps:16.0.0') {
         force = true
     }
 }

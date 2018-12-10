@@ -16,6 +16,7 @@ import android.widget.ProgressBar;
 import android.widget.SearchView;
 
 import com.giora.climasale.R;
+import com.giora.climasale.features.addPlace.presentation.AddPlaceActivity;
 import com.giora.climasale.features.seeOnMap.presentation.SeeOnMapActivity;
 import com.giora.climasale.services.ioc.component.ComponentManager;
 
@@ -78,9 +79,14 @@ public class CapitalListActivity extends AppCompatActivity {
 		addPlaceButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				capitalListViewModel.addLocation("", "");
+				startAddPlaceActivity();
 			}
 		});
+	}
+
+	private void startAddPlaceActivity() {
+		Intent AddPlaceIntent = new Intent(getApplicationContext(), AddPlaceActivity.class);
+		startActivity(AddPlaceIntent);
 	}
 
 	private void startSeeOnMapActivity() {

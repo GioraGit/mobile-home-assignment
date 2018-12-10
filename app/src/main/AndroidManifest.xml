@@ -22,11 +22,19 @@
 		<activity
 			android:name=".features.weatherDetails.presentation.WeatherDetailsActivity"
 			android:label="@string/title_activity_weather_details"
-			android:theme="@style/AppTheme">
-		</activity>
+			android:theme="@style/AppTheme"></activity>
 		<activity
 			android:name=".features.seeOnMap.presentation.SeeOnMapActivity"
 			android:label="@string/title_activity_see_on_map"
+			android:parentActivityName=".features.capitalList.presentation.CapitalListActivity"
+			android:theme="@style/AppTheme">
+			<meta-data
+				android:name="android.support.PARENT_ACTIVITY"
+				android:value="com.giora.climasale.features.capitalList.presentation.CapitalListActivity" />
+		</activity>
+		<activity
+			android:name=".features.addPlace.presentation.AddPlaceActivity"
+			android:label="@string/title_activity_add_place"
 			android:parentActivityName=".features.capitalList.presentation.CapitalListActivity"
 			android:theme="@style/AppTheme">
 			<meta-data
@@ -51,6 +59,7 @@
 		<uses-library
 			android:name="org.apache.http.legacy"
 			android:required="false" />
+
 	</application>
 
 </manifest>

@@ -144,8 +144,10 @@ public class WeatherDetailsActivity extends AppCompatActivity {
 				.observe(this, new Observer<LatLng>() {
 					@Override
 					public void onChanged(@Nullable LatLng latLng) {
-						if (latLng == null)
+						if (latLng == null) {
+							forecastListAdapter.setForecastViewModels(weatherDetailsViewModel.getEmptyForecasts());
 							return;
+						}
 
 						initMap(latLng);
 						weatherDetailsViewModel.getForecasts(latLng)

@@ -6,7 +6,7 @@ import android.arch.lifecycle.MutableLiveData;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.AsyncTask;
-import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.google.android.gms.maps.model.LatLng;
 
@@ -20,7 +20,7 @@ public class LatLngProvider implements ILatLngProvider {
 		final MutableLiveData<LatLng> latLngLiveData = new MutableLiveData<>();
 		new GeocoderTask(callingActivity, address, new IOnLatLngReadyCallback() {
 			@Override
-			public void onLatLngReady(@NonNull LatLng latLng) {
+			public void onLatLngReady(@Nullable LatLng latLng) {
 				latLngLiveData.setValue(latLng);
 			}
 		}).execute();
@@ -28,7 +28,7 @@ public class LatLngProvider implements ILatLngProvider {
 	}
 
 	private interface IOnLatLngReadyCallback {
-		void onLatLngReady(@NonNull LatLng latLng);
+		void onLatLngReady(@Nullable LatLng latLng);
 	}
 
 	private static class GeocoderTask extends AsyncTask<Void, Void, List<Address>> {
@@ -59,8 +59,10 @@ public class LatLngProvider implements ILatLngProvider {
 
 		@Override
 		protected void onPostExecute(List<Address> addresses) {
-			if (addresses == null || addresses.isEmpty())
+			if (addresses == null || addresses.isEmpty()) {
+				onAddressReadyCallback.onLatLngReady(null);
 				return;
+			}
 
 			Address address = addresses.get(0);
 			onAddressReadyCallback.onLatLngReady(new LatLng(address.getLatitude(), address.getLongitude()));

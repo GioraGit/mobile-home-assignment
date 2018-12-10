@@ -1,5 +1,6 @@
 package com.giora.climasale.features.capitalList.module;
 
+import com.giora.climasale.features.addPlace.data.ILocationProvider;
 import com.giora.climasale.features.capitalList.data.CapitalFieldsParameterBuilder;
 import com.giora.climasale.features.capitalList.data.CapitalsLiveApi;
 import com.giora.climasale.features.capitalList.data.CapitalsRepository;
@@ -41,8 +42,9 @@ public class CapitalListModule {
 
 	@Provides
 	ICapitalsRepository provideCapitalsRepository(ICapitalsLiveApi capitalsLiveApi,
-												  ICapitalFieldsParameterBuilder capitalFieldsParameterBuilder) {
-		return new CapitalsRepository(capitalsLiveApi, capitalFieldsParameterBuilder);
+												  ICapitalFieldsParameterBuilder capitalFieldsParameterBuilder,
+												  ILocationProvider locationProvider) {
+		return new CapitalsRepository(capitalsLiveApi, capitalFieldsParameterBuilder, locationProvider);
 	}
 
 	@Provides

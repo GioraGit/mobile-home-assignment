@@ -6,6 +6,7 @@ import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Transformations;
 import android.support.annotation.NonNull;
 
+import com.giora.climasale.features.addPlace.data.ILocationProvider;
 import com.giora.climasale.features.capitalList.domain.Capital;
 import com.giora.climasale.features.capitalList.domain.CapitalProperty;
 import com.giora.climasale.features.capitalList.domain.ICapitalsRepository;
@@ -18,12 +19,15 @@ public class CapitalsRepository implements ICapitalsRepository {
 
 	private final ICapitalsLiveApi capitalsLiveApi;
 	private final ICapitalFieldsParameterBuilder capitalFieldsParameterBuilder;
+	private final ILocationProvider locationProvider;
 	private MutableLiveData<List<Capital>> capitalsLiveData = initCapitalsLiveData();
 
 	public CapitalsRepository(ICapitalsLiveApi capitalsLiveApi,
-							  ICapitalFieldsParameterBuilder capitalFieldsParameterBuilder) {
+							  ICapitalFieldsParameterBuilder capitalFieldsParameterBuilder,
+							  ILocationProvider locationProvider) {
 		this.capitalsLiveApi = capitalsLiveApi;
 		this.capitalFieldsParameterBuilder = capitalFieldsParameterBuilder;
+		this.locationProvider = locationProvider;
 	}
 
 	@NonNull
@@ -63,25 +67,13 @@ public class CapitalsRepository implements ICapitalsRepository {
 		if (currentCapitals == null)
 			return;
 
-		location = "holon";
-		country = "israel";
+		Capital newLocation = locationProvider.getLocation(location, country, currentCapitals);
+		if (newLocation == null)
+			return;
+
 		List<Capital> newCapitals = new ArrayList<>(currentCapitals);
-		newCapitals.add(0, createCapitalForLocation(location, country));
+		newCapitals.add(0, newLocation);
 		capitalsLiveData.setValue(newCapitals);
-	}
-
-	private Capital createCapitalForLocation(String location, String country) {
-		String flagImageUrl = findFlagAmongCurrentCountries(country);
-		return new Capital(location, country, flagImageUrl, null, null);
-	}
-
-	private String findFlagAmongCurrentCountries(String country) {
-		List<Capital> capitals = capitalsLiveData.getValue();
-		for (Capital capital : capitals)
-			if (capital.country.toLowerCase().equals(country.toLowerCase()))
-				return capital.flagImageUrl;
-
-		return null;
 	}
 
 	private double[] getLatLng(CapitalResult capitalResult) {

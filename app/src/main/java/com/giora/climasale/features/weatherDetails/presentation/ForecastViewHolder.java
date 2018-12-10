@@ -49,8 +49,8 @@ class ForecastViewHolder extends RecyclerView.ViewHolder {
 	void setForecast(ForecastViewModel forecastViewModel) {
 		dayImageView.setImageResource(forecastViewModel.dayOfTheWeekImage);
 
-		if (forecastViewModel.shouldDisplayInitialText()) {
-			initialTextVew.setText(forecastViewModel.getInitialText());
+		if (forecastViewModel.shouldDisplayStatusText()) {
+			initialTextVew.setText(forecastViewModel.getStatusText());
 			hideForecast();
 			return;
 		}
