@@ -40,4 +40,9 @@ public class GetCapitalsUseCase implements IGetCapitalsUseCase {
 		data.setValue(filteredCapitals);
 		return data;
 	}
+
+	@Override
+	public void addLocation(String location, String country) {
+		capitalsRepository.addLocation(location, country);
+	}
 }

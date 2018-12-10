@@ -9,4 +9,6 @@ public interface ICapitalsRepository {
 
 	@NonNull
 	LiveData<List<Capital>> getCapitals(CapitalProperty[] capitalProperties);
+
+	void addLocation(String location, String country);
 }

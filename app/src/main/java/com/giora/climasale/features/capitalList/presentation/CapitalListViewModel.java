@@ -29,6 +29,10 @@ public class CapitalListViewModel extends ViewModel {
 		return mapToViewModels(capitals);
 	}
 
+	public void addLocation(String location, String country) {
+		getCapitalsUseCase.addLocation(location, country);
+	}
+
 	@NonNull
 	LiveData<List<CapitalViewModel>> filterCapitals(String term) {
 		LiveData<List<Capital>> capitals = getCapitalsUseCase.filterCapitals(term);

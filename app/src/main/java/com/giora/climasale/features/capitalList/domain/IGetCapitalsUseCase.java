@@ -12,4 +12,6 @@ public interface IGetCapitalsUseCase {
 
 	@NonNull
 	LiveData<List<Capital>> filterCapitals(String term);
+
+	void addLocation(String location, String country);
 }

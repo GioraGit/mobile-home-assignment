@@ -36,7 +36,8 @@ public class SeeOnMapActivity extends AppCompatActivity {
 
 	private CapitalListViewModel seeOnMapViewModel;
 	private GoogleMap googleMap;
-	private GoogleMap.OnMarkerClickListener onMarkerClickListener;
+	private GoogleMap.OnMarkerClickListener onMarkerClickListener = createOnMarkerClickListener();
+	;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +47,6 @@ public class SeeOnMapActivity extends AppCompatActivity {
 		ComponentManager.getComponent().inject(this);
 		seeOnMapViewModel = ViewModelProviders.of(this, capitalListViewModelFactory).get(CapitalListViewModel.class);
 
-		setOnMarkerClickListener();
 		initMap();
 	}
 
@@ -56,8 +56,13 @@ public class SeeOnMapActivity extends AppCompatActivity {
 			public void onChanged(@Nullable List<CapitalViewModel> capitalViewModels) {
 				final MarkerOptions markerOptions = new MarkerOptions();
 				for (final CapitalViewModel capitalViewModel : capitalViewModels) {
+					Double latitude = capitalViewModel.getLatitude();
+					Double longitude = capitalViewModel.getLongitude();
+					if (latitude == null || longitude == null)
+						continue;
+
 					markerOptions
-							.position(new LatLng(capitalViewModel.getLatitude(), capitalViewModel.getLongitude()))
+							.position(new LatLng(latitude, longitude))
 							.title(capitalViewModel.getCountry());
 					Marker marker = googleMap.addMarker(markerOptions);
 					marker.setTag(capitalViewModel);
@@ -81,8 +86,8 @@ public class SeeOnMapActivity extends AppCompatActivity {
 		});
 	}
 
-	private void setOnMarkerClickListener() {
-		onMarkerClickListener = new GoogleMap.OnMarkerClickListener() {
+	private GoogleMap.OnMarkerClickListener createOnMarkerClickListener() {
+		return new GoogleMap.OnMarkerClickListener() {
 			@Override
 			public boolean onMarkerClick(Marker marker) {
 				if (marker == null)

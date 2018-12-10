@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -79,8 +78,7 @@ public class CapitalListActivity extends AppCompatActivity {
 		addPlaceButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Snackbar.make(v, "Here's a Snackbar", Snackbar.LENGTH_LONG)
-						.setAction("Action", null).show();
+				capitalListViewModel.addLocation("", "");
 			}
 		});
 	}
@@ -109,7 +107,7 @@ public class CapitalListActivity extends AppCompatActivity {
 		capitalList.setAdapter(capitalListAdapter);
 	}
 
-	private void resetProgressBar() {
+	private void hideProgressBar() {
 		progressBar.setVisibility(View.GONE);
 	}
 
@@ -161,8 +159,13 @@ public class CapitalListActivity extends AppCompatActivity {
 				if (aViewHolderWasPopulated == null || !aViewHolderWasPopulated)
 					return;
 
-				resetProgressBar();
+				hideProgressBar();
+				showAddPlaceButton();
 			}
 		});
+	}
+
+	private void showAddPlaceButton() {
+		addPlaceButton.show();
 	}
 }

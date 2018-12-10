@@ -48,9 +48,11 @@
 		android:layout_margin="16dp"
 		android:backgroundTint="@color/fab_color"
 		android:src="@drawable/fab_plus_icon"
+		android:visibility="gone"
 		app:borderWidth="0dp"
 		app:layout_anchor="@id/list"
 		app:layout_anchorGravity="bottom|end"
-		app:layout_behavior="com.giora.climasale.services.views.ScrollAwareFABBehavior" />
+		app:layout_behavior="com.giora.climasale.services.views.ScrollAwareFABBehavior"
+		tools:visibility="visible" />
 
 </android.support.design.widget.CoordinatorLayout>
